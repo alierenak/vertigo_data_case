@@ -1,0 +1,116 @@
+version: 2
+
+models:
+  - name: stg_raw_user_metrics
+    description: Staging table for raw user metrics with data cleaning and quality flags
+    columns:
+      - name: user_id
+        description: Unique identifier for each user
+        tests:
+          - not_null
+      - name: event_date
+        description: Date when the activity occurred
+        tests:
+          - not_null
+      - name: platform
+        description: User's platform (android/ios)
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['android', 'ios']
+      - name: country
+        description: User's country (Unknown if missing)
+        tests:
+          - not_null
+      - name: data_quality_flag
+        description: Flag indicating potential data quality issues
+      - name: user_age_days
+        description: Number of days since user installation
+      - name: revenue_type
+        description: Category of revenue generation for the user
+
+  - name: daily_metrics
+    description: Daily aggregated metrics by date, country, and platform
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - event_date
+            - country
+            - platform
+    columns:
+      - name: event_date
+        description: Date of activity
+        tests:
+          - not_null
+      - name: country
+        description: User's country
+        tests:
+          - not_null
+      - name: platform
+        description: User's platform (android/ios)
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['android', 'ios']
+      - name: dau
+        description: Daily Active Users
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 1"
+      - name: total_iap_revenue
+        description: Sum of in-app purchase revenue
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+      - name: total_ad_revenue
+        description: Sum of advertisement revenue
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+      - name: arpdau
+        description: Average revenue per daily active user (IAP + Ad revenue / DAU)
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+      - name: matches_started
+        description: Sum of matches started
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+      - name: match_per_dau
+        description: Average matches started per DAU
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+      - name: win_ratio
+        description: Ratio of victories to matches ended
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: ">= 0 AND <= 1"
+      - name: defeat_ratio
+        description: Ratio of defeats to matches ended
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: ">= 0 AND <= 1"
+      - name: server_error_per_dau
+        description: Server connection errors per DAU
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+      - name: avg_session_duration_minutes
+        description: Average session duration in minutes
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+      - name: sessions_per_user
+        description: Average sessions per user
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"

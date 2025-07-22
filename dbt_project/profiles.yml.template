@@ -1,0 +1,21 @@
+mobile_game_analytics:
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: YOUR-GCP-PROJECT-ID
+      dataset: mobile_analytics_dev
+      threads: 4
+      timeout_seconds: 300
+      location: US
+      keyfile: ./dbt-key.json
+    prod:
+      type: bigquery
+      method: service-account
+      project: YOUR-GCP-PROJECT-ID
+      dataset: mobile_analytics_prod
+      threads: 4
+      timeout_seconds: 300
+      location: US
+      keyfile: ./dbt-key.json
+  target: dev

@@ -1,0 +1,67 @@
+version: 2
+
+sources:
+  - name: raw
+    description: Raw data from mobile game user metrics
+    database: elated-badge-466312-p3
+    schema: mobile_analytics_dev
+    tables:
+      - name: raw_user_metrics
+        description: User-level daily metrics from mobile game
+        columns:
+          - name: user_id
+            description: Unique identifier for each user
+            tests:
+              - not_null
+          - name: event_date
+            description: Date when the activity occurred
+            tests:
+              - not_null
+          - name: platform
+            description: User's platform (android/ios)
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['android', 'ios']
+          - name: install_date
+            description: Date when user installed the game
+            tests:
+              - not_null
+          - name: country
+            description: User's country
+          - name: total_session_count
+            description: Total number of sessions on that day
+            tests:
+              - not_null
+          - name: total_session_duration
+            description: Total time spent in minutes on that day
+            tests:
+              - not_null
+          - name: match_start_count
+            description: Total number of matches started
+            tests:
+              - not_null
+          - name: match_end_count
+            description: Total number of matches finished
+            tests:
+              - not_null
+          - name: victory_count
+            description: Total number of matches won
+            tests:
+              - not_null
+          - name: defeat_count
+            description: Total number of matches lost
+            tests:
+              - not_null
+          - name: server_connection_error
+            description: Count of server connection failures
+            tests:
+              - not_null
+          - name: iap_revenue
+            description: In-app purchase revenue in USD
+            tests:
+              - not_null
+          - name: ad_revenue
+            description: Advertisement revenue in USD
+            tests:
+              - not_null
