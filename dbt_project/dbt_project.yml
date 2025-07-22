@@ -27,6 +27,5 @@ models:
       +materialized: table
 
 vars:
-  # The `start_date` variable will be accessible in all resources
-  start_date: '2024-02-15'
-  end_date: '2024-03-15'
+  start_date: '2024-02-1'
+  end_date: '2024-02-29'
