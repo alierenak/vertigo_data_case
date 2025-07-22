@@ -92,19 +92,22 @@ final_metrics as (
 )
 
 select 
+  -- Dimensions (keep as is)
   event_date,
   country,
   platform,
-  dau,
-  total_iap_revenue,
-  total_ad_revenue,
-  arpdau,
-  matches_started,
-  match_per_dau,
-  win_ratio,
-  defeat_ratio,
-  server_error_per_dau,
-  avg_session_duration_minutes,
-  sessions_per_user
+  
+  -- Explicitly cast all numeric fields as proper types for BI tools
+  cast(dau as int64) as dau,
+  cast(total_iap_revenue as float64) as total_iap_revenue,
+  cast(total_ad_revenue as float64) as total_ad_revenue,
+  cast(arpdau as float64) as arpdau,
+  cast(matches_started as int64) as matches_started,
+  cast(match_per_dau as float64) as match_per_dau,
+  cast(win_ratio as float64) as win_ratio,
+  cast(defeat_ratio as float64) as defeat_ratio,
+  cast(server_error_per_dau as float64) as server_error_per_dau,
+  cast(avg_session_duration_minutes as float64) as avg_session_duration_minutes,
+  cast(sessions_per_user as float64) as sessions_per_user
 from final_metrics
 order by event_date, country, platform

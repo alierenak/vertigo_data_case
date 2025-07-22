@@ -92,12 +92,12 @@ models:
         description: Ratio of victories to matches ended
         tests:
           - dbt_utils.expression_is_true:
-              expression: ">= 0 AND <= 1"
+              expression: ">= 0 AND win_ratio <= 1"
       - name: defeat_ratio
         description: Ratio of defeats to matches ended
         tests:
           - dbt_utils.expression_is_true:
-              expression: ">= 0 AND <= 1"
+              expression: ">= 0 AND defeat_ratio <= 1"
       - name: server_error_per_dau
         description: Server connection errors per DAU
         tests:
