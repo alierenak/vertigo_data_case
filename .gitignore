@@ -68,6 +68,7 @@ dbt_project/profiles.yml  # Contains local paths, should be environment-specific
 service-account*.json
 dbt-key.json
 credentials.json
+profiles.yml
 
 # BigQuery temp files
 .bigquery/
@@ -90,7 +91,6 @@ ehthumbs.db
 Desktop.ini
 
 # Data files (these are large)
-*.csv
 *.parquet
 *.gz
 data/
@@ -98,7 +98,6 @@ data/
 # Analysis outputs (can be regenerated)
 *.png
 *.jpg
-*.pdf
 analysis/
 Executive_Report_*.pdf
 comprehensive_analysis.png

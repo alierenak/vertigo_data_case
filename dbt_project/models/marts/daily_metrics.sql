@@ -1,3 +1,9 @@
+/*
+  Mobile Game Analytics - Daily Metrics Model
+  
+  Aggregates user-level daily metrics by date, country, and platform
+  Produces business KPIs for dashboard consumption
+*/
 {{
   config(
     materialized='table',
@@ -77,8 +83,9 @@ final_metrics as (
     ) as server_error_per_dau,
     
     -- Additional useful metrics
+    -- Convert from seconds to minutes (duration is stored in seconds)
     round(
-      safe_divide(total_session_duration, nullif(total_sessions, 0)), 
+      safe_divide(total_session_duration / 60.0, nullif(total_sessions, 0)), 
       2
     ) as avg_session_duration_minutes,
     
