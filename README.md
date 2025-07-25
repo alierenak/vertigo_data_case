@@ -139,8 +139,7 @@ Follow the `dashboard_setup_guide.md` to create visualizations in Looker Studio.
 ## Sample Output
 
 Sample data is available in:
-- `sample_daily_metrics.csv` (full sample)
-- `sample_daily_metrics_for_dashboard.csv` (dashboard subset)
+- `sample_daily_metrics_output.csv` (50 sample sorted by dau)
 
 Example record:
 ```
@@ -183,52 +182,3 @@ For production deployment:
   WHERE event_date > (SELECT MAX(event_date) FROM {{ this }})
 {% endif %}
 ```
-
-## Testing Strategy
-
-Implemented tests include:
-- **Data Quality**: Null checks, value ranges, logical consistency
-- **Business Logic**: Revenue calculations, ratio validations
-- **Referential Integrity**: Unique combinations, foreign key relationships
-
-## Files Generated
-
-- **DBT Project**: Complete dbt project with models, tests, and documentation
-- **Data Loading Scripts**: Python scripts for BigQuery data ingestion
-- **Sample Output**: CSV files demonstrating expected results
-- **Dashboard Guide**: Step-by-step visualization setup instructions
-- **Analysis Scripts**: Python exploratory data analysis tools
-
-## Performance Improvements & Cost Optimization
-
-### **Immediate Optimizations**
-- **Table Partitioning**: Partition by `event_date`, cluster by `country, platform` (80-90% cost reduction)
-- **Incremental Models**: Convert to incremental refresh, process only new data (95% cost reduction)
-- **Query Caching**: Cache frequently accessed aggregations for dashboard performance
-
-### **Production Enhancements**
-- **Smart Scheduling**: Run during off-peak hours, weekly full refreshes only
-- **Data Lifecycle**: 2-year retention policy, archive older data to cold storage
-- **Cost Monitoring**: Set $50/day budget alerts, track query costs per model
-
-### **Advanced Features**
-- **Real-time Streaming**: For live dashboard updates and immediate insights
-- **Data Sampling**: 1% sample tables for development and testing environments
-- **Multi-region Strategy**: US primary, EU secondary for global compliance
-
-**Expected Impact**: 80%+ cost reduction, 10-20x performance improvement for typical dashboard queries.
-
-## Next Steps
-
-1. **Production Deployment**: Set up automated dbt runs with scheduling
-2. **Advanced Analytics**: Add cohort analysis, retention metrics, LTV modeling
-3. **A/B Testing Framework**: Integrate experimental design and statistical testing
-4. **Predictive Modeling**: Add ML models for user churn and revenue forecasting
-
-## Contact & Support
-
-For questions about this implementation:
-- Review the DBT documentation and model lineage
-- Check BigQuery query performance and costs
-- Validate dashboard metrics against expected business logic
-- Consider data freshness and update frequencies for production use
